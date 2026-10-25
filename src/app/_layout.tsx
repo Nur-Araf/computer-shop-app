@@ -1,3 +1,4 @@
+// src/app/_layout.tsx
 import { Stack, useRouter, useSegments } from "expo-router";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
@@ -15,7 +16,6 @@ export default function RootLayout() {
   const router = useRouter();
   const segments = useSegments();
   const colors = Colors.light;
-  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -30,16 +30,22 @@ export default function RootLayout() {
     if (checkingAuth) return;
 
     const onLoginScreen = segments[0] === "login";
-    const insideTabs = segments[0] === "(tabs)";
 
     if (!user && !onLoginScreen) {
       router.replace("/login");
-    } else if (user && onLoginScreen) {
-      router.replace("/(tabs)");
-    } else if (user && !insideTabs && !onLoginScreen) {
+      return;
+    }
+
+    if (user && onLoginScreen) {
       router.replace("/(tabs)");
     }
   }, [user, checkingAuth, segments, router]);
+
+  console.log("AUTH GUARD CHECK", {
+    user: user?.uid ?? null,
+    checkingAuth,
+    segments,
+  });
 
   if (checkingAuth) {
     return (
@@ -61,6 +67,7 @@ export default function RootLayout() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="login" />
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="create" />
       </Stack>
       <Toast />
     </>

@@ -1,17 +1,20 @@
-import { Redirect } from "expo-router";
-import { NativeTabs } from "expo-router/unstable-native-tabs";
+import { Ionicons } from "@expo/vector-icons";
+import { Redirect, Tabs } from "expo-router";
 import { onAuthStateChanged, type User } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, View } from "react-native";
 
-import { Colors } from "@/constants/theme";
 import { auth } from "@/lib/firebase";
 import { UserService } from "@/services/user";
 
 type AccessStatus = "loading" | "allowed" | "denied";
 
+const RED = "#D52C3A";
+const INACTIVE = "#9a9a9a";
+const BORDER = "#e8e8e8";
+const BG = "#ffffff";
+
 export default function TabsLayout() {
-  const colors = Colors.light;
   const [status, setStatus] = useState<AccessStatus>("loading");
 
   useEffect(() => {
@@ -27,16 +30,11 @@ export default function TabsLayout() {
 
       try {
         const firestoreUser = await UserService.getUserByEmail(user.email);
-
         const authorized =
           firestoreUser?.role === "admin" || firestoreUser?.role === "staff";
-
-        if (active) {
-          setStatus(authorized ? "allowed" : "denied");
-        }
+        if (active) setStatus(authorized ? "allowed" : "denied");
       } catch (error) {
         console.error("Failed to verify user access:", error);
-
         if (active) setStatus("denied");
       }
     });
@@ -49,15 +47,8 @@ export default function TabsLayout() {
 
   if (status === "loading") {
     return (
-      <View
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          alignItems: "center",
-          backgroundColor: colors.background,
-        }}
-      >
-        <ActivityIndicator size="large" color={colors.primary} />
+      <View className="flex-1 items-center justify-center bg-white">
+        <ActivityIndicator size="large" color={RED} />
       </View>
     );
   }
@@ -67,28 +58,83 @@ export default function TabsLayout() {
   }
 
   return (
-    <NativeTabs
-      backgroundColor={colors.tabBar}
-      indicatorColor={colors.secondary}
-      labelStyle={{
-        selected: { color: colors.primary },
-        default: { color: colors.mutedForeground },
+    <Tabs
+      screenOptions={{
+        headerShown: false,
+        tabBarActiveTintColor: RED,
+        tabBarInactiveTintColor: INACTIVE,
+        tabBarStyle: {
+          backgroundColor: BG,
+          borderTopColor: BORDER,
+          borderTopWidth: 1,
+          height: 68,
+          paddingTop: 6,
+          paddingBottom: 10,
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: "600",
+          marginTop: 2,
+        },
+        tabBarIconStyle: {
+          marginTop: 2,
+        },
       }}
     >
-      <NativeTabs.Trigger name="index">
-        <NativeTabs.Trigger.Label>Home</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon sf="house" />
-      </NativeTabs.Trigger>
-
-      <NativeTabs.Trigger name="explore">
-        <NativeTabs.Trigger.Label>Explore</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon sf="safari" />
-      </NativeTabs.Trigger>
-
-      <NativeTabs.Trigger name="house">
-        <NativeTabs.Trigger.Label>House</NativeTabs.Trigger.Label>
-        <NativeTabs.Trigger.Icon sf="building.2" />
-      </NativeTabs.Trigger>
-    </NativeTabs>
+      <Tabs.Screen
+        name="index"
+        options={{
+          title: "Home",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? "home" : "home-outline"}
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="sales"
+        options={{
+          title: "Sales",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? "cart" : "cart-outline"}
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="scan"
+        options={{
+          title: "Scan",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? "qr-code" : "qr-code-outline"}
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="more"
+        options={{
+          title: "More",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={
+                focused ? "ellipsis-horizontal" : "ellipsis-horizontal-outline"
+              }
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      />
+    </Tabs>
   );
 }

@@ -1,3 +1,4 @@
+// src/app/(tabs)/index.tsx
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useRouter } from "expo-router";
@@ -43,6 +44,7 @@ export default function HomeScreen() {
       await AsyncStorage.clear();
 
       // Navigate back to login and reset the stack
+      console.log("HOME SCREEN REDIRECT FIRED: /");
       router.replace("/");
     } finally {
       setLoggingOut(false);

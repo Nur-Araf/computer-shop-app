@@ -1,3 +1,4 @@
+// src/app/(tabs)/result.tsx
 import { StoreProductService } from "@/services/post.service";
 import { Ionicons } from "@expo/vector-icons";
 import { useLocalSearchParams, useRouter } from "expo-router";

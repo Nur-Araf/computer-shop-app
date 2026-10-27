@@ -164,6 +164,7 @@ export default function ScanScreen() {
         resumeTimer.current = setTimeout(() => {
           lockRef.current = false;
           setScanned(false);
+          router.replace("/sales" as never);
         }, RESUME_DELAY_MS);
       } else {
         setScanError(res.message);

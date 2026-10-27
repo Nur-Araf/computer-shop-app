@@ -1352,6 +1352,9 @@ export const ProductUnitService = {
   },
 
   async getUnitsByProduct(productId: string): Promise<ProductUnit[]> {
+    console.log("[Units Lookup] Requested productId:", productId);
+
+    // First, run the normal query.
     const q = query(
       collection(db, PRODUCT_UNIT_COLLECTION),
       where("productId", "==", productId),
@@ -1359,9 +1362,34 @@ export const ProductUnitService = {
 
     const snapshot = await getDocs(q);
 
-    return snapshot.docs.map(
-      (doc) => ({ id: doc.id, ...doc.data() }) as ProductUnit,
+    console.log("[Units Lookup] Matching units:", snapshot.size);
+
+    if (!snapshot.empty) {
+      return snapshot.docs.map(
+        (doc) => ({ id: doc.id, ...doc.data() }) as ProductUnit,
+      );
+    }
+
+    // TEMPORARY DEBUG: inspect the stored unit documents.
+    const allUnitsSnapshot = await getDocs(
+      collection(db, PRODUCT_UNIT_COLLECTION),
     );
+
+    console.log(
+      "[Units Lookup] All stored units:",
+      allUnitsSnapshot.docs.map((doc) => {
+        const data = doc.data();
+
+        return {
+          id: doc.id,
+          productId: data.productId,
+          serialNumber: data.serialNumber,
+          status: data.status,
+        };
+      }),
+    );
+
+    return [];
   },
 
   async getAvailableUnit(productId: string): Promise<ProductUnit | null> {

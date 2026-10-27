@@ -85,7 +85,7 @@ export default function LoginScreen() {
         text2: `Welcome, ${firestoreUser.name || user.email || "User"}!`,
       });
 
-      router.replace("/(tabs)");
+      router.replace("/(tabs)/sales");
     } catch (error: unknown) {
       console.error("Login failed:", error);
 
@@ -189,8 +189,8 @@ export default function LoginScreen() {
               disabled={!canSubmit}
               className={`h-[52px] items-center justify-center rounded-xl ${
                 canSubmit
-                  ? "bg-[#7C3AED] active:bg-[#6D28D9]"
-                  : "bg-[#7C3AED]/40"
+                  ? "bg-[#D52C3A] active:bg-[#D52C3A]/80"
+                  : "bg-[#D52C3A]/40"
               }`}
             >
               {loading ? (

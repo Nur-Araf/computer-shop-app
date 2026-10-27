@@ -81,7 +81,7 @@ export default function TabsLayout() {
         },
       }}
     >
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="index"
         options={{
           title: "Home",
@@ -93,7 +93,7 @@ export default function TabsLayout() {
             />
           ),
         }}
-      />
+      /> */}
       <Tabs.Screen
         name="sales"
         options={{
@@ -120,7 +120,7 @@ export default function TabsLayout() {
           ),
         }}
       />
-      <Tabs.Screen
+      {/* <Tabs.Screen
         name="more"
         options={{
           title: "More",
@@ -129,6 +129,19 @@ export default function TabsLayout() {
               name={
                 focused ? "ellipsis-horizontal" : "ellipsis-horizontal-outline"
               }
+              size={24}
+              color={color}
+            />
+          ),
+        }}
+      /> */}
+      <Tabs.Screen
+        name="subsale"
+        options={{
+          title: "Sub Sale",
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? "pricetag" : "pricetag-outline"}
               size={24}
               color={color}
             />

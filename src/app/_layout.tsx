@@ -41,11 +41,6 @@ export default function RootLayout() {
     }
   }, [user, checkingAuth, segments, router]);
 
-  console.log("AUTH GUARD CHECK", {
-    user: user?.uid ?? null,
-    checkingAuth,
-    segments,
-  });
 
   if (checkingAuth) {
     return (

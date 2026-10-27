@@ -1,3 +1,4 @@
+// src/components/sales/Salecartstore.ts
 import { useSyncExternalStore } from "react";
 
 import type { SelectedProduct } from "@/config/types/saleTypes";

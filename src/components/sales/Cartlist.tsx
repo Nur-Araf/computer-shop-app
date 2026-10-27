@@ -100,7 +100,12 @@ function CartRow({
               onBlur={() => {
                 if (qty < 1) onQuantityChange(item.id, 1);
               }}
-              className={`mx-1.5 h-9 w-14 rounded-lg border bg-white text-center text-sm text-[#252525] ${
+              style={{
+                paddingTop: 0,
+                paddingBottom: 0,
+                textAlignVertical: "center",
+              }}
+              className={`mx-1.5 h-9 w-14 rounded-lg border bg-white px-1 py-0 text-center text-sm leading-5 text-[#252525] ${
                 overStock ? "border-red-500" : "border-[#DDDDDD]"
               }`}
             />
@@ -132,7 +137,12 @@ function CartRow({
             }}
             placeholder={formatCurrency(item.basePrice)}
             placeholderTextColor="#BBBBBB"
-            className={`h-9 rounded-lg border bg-white px-2 text-sm text-[#252525] ${
+            style={{
+              paddingTop: 0,
+              paddingBottom: 0,
+              textAlignVertical: "center",
+            }}
+            className={`h-9 rounded-lg border bg-white px-2 py-0 text-sm leading-5 text-[#252525] ${
               !item.sellPrice ? "border-red-400" : "border-[#DDDDDD]"
             }`}
           />

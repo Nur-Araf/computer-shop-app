@@ -89,6 +89,8 @@ export default function ResultScreen() {
   const scannedName = getParam(params.name);
   const serialNumber = getParam(params.sn);
 
+  console.log(pid, scannedName, serialNumber);
+
   const [product, setProduct] = useState<ProductRecord | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -152,11 +154,19 @@ export default function ResultScreen() {
     Boolean(scannedName && registeredName) &&
     scannedName.trim() !== registeredName.trim();
 
-  const productFields = product
-    ? Object.entries(product).filter(
-        ([key, value]) => key !== "id" && value !== undefined,
-      )
-    : [];
+    const hiddenFields = ["image", "images", "baseprice", "price"];
+
+    const productFields = product
+      ? Object.entries(product).filter(
+          ([key, value]) =>
+            key !== "id" &&
+            value !== undefined &&
+            !hiddenFields.includes(key.toLowerCase()),
+          // Alternatively, use partial matching if keys might be like "productImage" or "base_price":
+          // !hiddenFields.some(hidden => key.toLowerCase().includes(hidden))
+        )
+      : [];
+
 
   return (
     <SafeAreaView className="flex-1 bg-[#F5F5F5]">
@@ -316,6 +326,8 @@ export default function ResultScreen() {
                 No additional product fields were found.
               </Text>
             ) : (
+
+              
               productFields.map(([key, value], index) => (
                 <View
                   key={key}

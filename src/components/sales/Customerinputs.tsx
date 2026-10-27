@@ -1,9 +1,9 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useMemo, useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 
-import type { Customer } from "../../config/types/saleTypes";
 import { digitsOnly } from "@/utils/phone";
+import type { Customer } from "../../config/types/saleTypes";
 
 export const PAYMENT_TYPES = [
   "Cash",
@@ -153,27 +153,33 @@ export default function CustomerInputs({
         <Text className="mb-1.5 text-sm font-medium text-[#555555]">
           Payment Type *
         </Text>
-        <View className="flex-row flex-wrap gap-2">
-          {PAYMENT_TYPES.map((t) => {
-            const on = paymentType === t;
-            return (
-              <Pressable
-                key={t}
-                onPress={() => onPaymentChange(t)}
-                className={`rounded-full border px-4 py-2.5 ${
-                  on
-                    ? "border-[#D52C3A] bg-[#D52C3A]"
-                    : "border-[#DDDDDD] bg-white"
-                }`}
-              >
-                <Text
-                  className={`text-sm font-medium ${on ? "text-white" : "text-[#555555]"}`}
+        <View className="flex-row gap-2">
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={{ gap: 6 }}
+          >
+            {PAYMENT_TYPES.map((t) => {
+              const on = paymentType === t;
+              return (
+                <Pressable
+                  key={t}
+                  onPress={() => onPaymentChange(t)}
+                  className={`rounded-lg border px-3 py-1.5 ${
+                    on
+                      ? "border-[#D52C3A] bg-[#D52C3A]"
+                      : "border-[#DDDDDD] bg-white"
+                  }`}
                 >
-                  {t}
-                </Text>
-              </Pressable>
-            );
-          })}
+                  <Text
+                    className={`text-sm font-medium ${on ? "text-white" : "text-[#555555]"}`}
+                  >
+                    {t}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </ScrollView>
         </View>
         {paymentError && (
           <Text className="mt-1 text-xs text-red-500">

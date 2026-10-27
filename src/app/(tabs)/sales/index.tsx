@@ -509,15 +509,15 @@ export default function SalesScreen() {
       }
 
       // 7) Invoice HTML (non-critical)
-      try {
-        await InvoiceFirestoreService.saveInvoice(
-          savedSale,
-          buildInvoiceHTML(savedSale),
-        );
-      } catch (err) {
-        console.warn("Invoice save failed:", err);
-        warnings.push("Invoice could not be stored.");
-      }
+      // try {
+      //   await InvoiceFirestoreService.saveInvoice(
+      //     savedSale,
+      //     buildInvoiceHTML(savedSale),
+      //   );
+      // } catch (err) {
+      //   console.warn("Invoice save failed:", err);
+      //   warnings.push("Invoice could not be stored.");
+      // }
 
       // 8) Success: show invoice modal AND clear the cart right away
       setShowConfirm(false);

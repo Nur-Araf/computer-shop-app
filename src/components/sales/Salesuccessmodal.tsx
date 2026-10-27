@@ -120,7 +120,7 @@ export default function SaleSuccessModal({ sale, onNewSale }: Props) {
               )}
             </View>
 
-            <Pressable
+            {/* <Pressable
               onPress={print}
               disabled={!!busy}
               className={`mt-5 flex-row items-center justify-center rounded-xl bg-green-600 py-3.5 ${
@@ -137,9 +137,9 @@ export default function SaleSuccessModal({ sale, onNewSale }: Props) {
                   </Text>
                 </>
               )}
-            </Pressable>
+            </Pressable> */}
 
-            <Pressable
+            {/* <Pressable
               onPress={sharePdf}
               disabled={!!busy}
               className={`mt-3 flex-row items-center justify-center rounded-xl border border-green-600 py-3.5 ${
@@ -156,7 +156,7 @@ export default function SaleSuccessModal({ sale, onNewSale }: Props) {
                   </Text>
                 </>
               )}
-            </Pressable>
+            </Pressable> */}
 
             <Pressable
               onPress={onNewSale}
